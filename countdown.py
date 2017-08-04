@@ -11,13 +11,12 @@ LEDs = 64
 steps_per_LED = 256
 total_LED_steps = LEDs * steps_per_LED
 COLOR_MAX = 255
-duration = 10*1000
+duration = 60 * 1000
 
 
 def millis():
     # return int((datetime.datetime.utcnow() -
     # datetime.datetime(1970, 1, 1)).total_seconds() * 1000)
-    # print int(round(time.time() * 1000))
     return int(round(time.time() * 1000))
 
 
@@ -26,7 +25,6 @@ countdown_zero = start_time
 
 
 def init():
-    # print "init!"
     global countdown_zero
     countdown_zero = millis() + duration
 
@@ -36,9 +34,7 @@ init()
 
 def tick(time_left):
     percentage = time_left / duration
-    print(str(time_left) + " / " + str(duration) + " = " + str(percentage))
     current_LED_step = round(total_LED_steps * percentage, 0)
-    print("current step: " + str(current_LED_step) + " / " + str(total_LED_steps))
     pixels = [pixel(i, current_LED_step) for i in range(64)]
     s.set_pixels(pixels)
 
@@ -48,7 +44,6 @@ def pixel(i, current_step):
     my_max_step = steps_per_LED * i + steps_per_LED - 1
     if my_min_step <= current_step and my_max_step >= current_step:
         my_percentage = (current_step - my_min_step) / steps_per_LED
-        #print "pixel " + str(i) + " percentage: " + str(my_percentage)
         if my_percentage >= 0.5:
             my_red = min(2 * int(round(COLOR_MAX - (COLOR_MAX * my_percentage),
                                        0)), 255)
@@ -56,7 +51,6 @@ def pixel(i, current_step):
         else:
             my_red = 255
             my_green = min(2 * int(round(COLOR_MAX * my_percentage, 0)), 255)
-        print ((my_red, my_green, 0))
         return (my_red, my_green, 0)
     elif my_max_step < current_step:
         return green
@@ -68,7 +62,6 @@ while True:
     if s.stick.get_events():
         init()
     time_left = max(countdown_zero - millis(), 0)
-    print("loop time left " + str(time_left))
     if not time_left:
         tick(time_left)
         time.sleep(1)
