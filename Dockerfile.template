@@ -12,6 +12,10 @@ RUN apt-get install -yq \
     sense-hat && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
+RUN find . -name '*arm-linux-gnueabihf*' | \
+    xargs -n 1 -I % bash -c 'echo cp % $(echo % | sed "s/arm-linux-gnueabihf\.//g" )' | \
+    xargs -L 1 -I % bash -c '%'
+
 # Defines our working directory in container
 WORKDIR /usr/src/app
 
@@ -29,4 +33,4 @@ COPY . ./
 ENV INITSYSTEM on
 
 # server.js will run when container starts up on the device
-CMD ./run.sh
+CMD modprobe i2c-dev && ./run.sh
