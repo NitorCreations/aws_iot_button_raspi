@@ -52,6 +52,7 @@ def pixel(i, current_step):
         else:
             my_red = 255
             my_green = min(2 * int(round(COLOR_MAX * my_percentage, 0)), 255)
+        print (my_red, my_green, 0)
         return (my_red, my_green, 0)
     elif my_max_step < current_step:
         return green
@@ -60,6 +61,7 @@ def pixel(i, current_step):
 
 
 while True:
+    print "loop"
     if s.stick.get_events():
         init()
     time_left = max(countdown_zero - millis(), 0)
