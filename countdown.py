@@ -47,7 +47,7 @@ def pixel(i, current_step):
     my_max_step = steps_per_LED * i + steps_per_LED - 1
     if my_min_step <= current_step and my_max_step >= current_step:
         my_percentage = (current_step - my_min_step) / steps_per_LED
-        print "pixel " + str(i) + "percentage: " + str(my_percentage)
+        print "pixel " + str(i) + " percentage: " + str(my_percentage)
         if my_percentage >= 0.5:
             my_red = min(2 * int(round(COLOR_MAX - (COLOR_MAX * my_percentage),
                                        0)), 255)
@@ -64,10 +64,10 @@ def pixel(i, current_step):
 
 
 while True:
-    print "loop"
     if s.stick.get_events():
         init()
     time_left = max(countdown_zero - millis(), 0)
+    print "loop time left " + str(time_left)
     if not time_left:
         tick(time_left)
         time.sleep(1)
