@@ -2,7 +2,7 @@
 # see more about dockerfile templates here: http://docs.resin.io/deployment/docker-templates/
 # and about resin base images here: http://docs.resin.io/runtime/resin-base-images/
 # Note the node:slim image doesn't have node-gyp
-FROM resin/%%RESIN_MACHINE_NAME%%-python:2.7
+FROM resin/%%RESIN_MACHINE_NAME%%-python:3.6
 
 # use apt-get if you need to install dependencies,
 # for instance if you need ALSA sound utils, just uncomment the lines below.
@@ -12,8 +12,8 @@ RUN apt-get install -yq \
     sense-hat && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN cd /usr/lib/python2.7/dist-packages && find . -name '*arm-linux-gnueabihf*' | \
-    xargs -n 1 -I % bash -c 'echo cp % $(echo % | sed "s/arm-linux-gnueabihf\.//g" )' | \
+RUN cd /usr/lib/python2.7/dist-packages && find . -name '*cpython-34m-aarch64-linux-gnu*' | \
+    xargs -n 1 -I % bash -c 'echo cp % $(echo % | sed "s/cpython-34m-aarch64-linux-gnu\.//g" )' | \
     xargs -L 1 -I % bash -c '%'
 
 # Defines our working directory in container
