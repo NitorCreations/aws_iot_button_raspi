@@ -35,7 +35,7 @@ init()
 
 
 def tick(time_left):
-    percentage = time_left / duration
+    percentage = time_left / (duration * 1.0)
     print str(time_left) + " / " + str(duration) + " = " + str(percentage)
     current_LED_step = round(total_LED_steps * percentage, 0)
     print "current step: " + str(current_LED_step) + " / " + str(total_LED_steps)
