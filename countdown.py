@@ -17,7 +17,7 @@ duration = 10*1000
 def millis():
     # return int((datetime.datetime.utcnow() -
     # datetime.datetime(1970, 1, 1)).total_seconds() * 1000)
-    print int(round(time.time() * 1000))
+    # print int(round(time.time() * 1000))
     return int(round(time.time() * 1000))
 
 
@@ -36,6 +36,7 @@ init()
 
 def tick(time_left):
     percentage = time_left / duration
+    print str(time_left) + " / " + str(duration) + " = " + str(percentage)
     current_LED_step = round(total_LED_steps * percentage, 0)
     print "current step: " + str(current_LED_step) + " / " + str(total_LED_steps)
     pixels = [pixel(i, current_LED_step) for i in range(64)]
@@ -47,7 +48,7 @@ def pixel(i, current_step):
     my_max_step = steps_per_LED * i + steps_per_LED - 1
     if my_min_step <= current_step and my_max_step >= current_step:
         my_percentage = (current_step - my_min_step) / steps_per_LED
-        print "pixel " + str(i) + " percentage: " + str(my_percentage)
+        #print "pixel " + str(i) + " percentage: " + str(my_percentage)
         if my_percentage >= 0.5:
             my_red = min(2 * int(round(COLOR_MAX - (COLOR_MAX * my_percentage),
                                        0)), 255)
