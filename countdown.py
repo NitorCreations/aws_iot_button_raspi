@@ -3,7 +3,7 @@ import time
 # from datetime import datetime
 
 s = SenseHat()
-# s.low_light = True
+s.low_light = True
 
 green = (0, 255, 0)
 red = (255, 0, 0)
