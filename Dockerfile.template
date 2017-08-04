@@ -13,8 +13,8 @@ RUN apt-get update && apt-get install -yq \
     sense-hat && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN cd /usr/lib/python2.7/dist-packages && find . -name '*cpython-34m-aarch64-linux-gnu*' | \
-    xargs -n 1 -I % bash -c 'echo cp % $(echo % | sed "s/cpython-34m-aarch64-linux-gnu\.//g" )' | \
+RUN cd /usr/lib/python3/dist-packages && find . -name '*cpython-34m-arm-linux-gnueabihf*' | \
+    xargs -n 1 -I % bash -c 'echo cp % $(echo % | sed "s/cpython-34m-arm-linux-gnueabihf\.//g" )' | \
     xargs -L 1 -I % bash -c '%'
 
 # Defines our working directory in container
