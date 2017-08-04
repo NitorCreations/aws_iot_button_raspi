@@ -37,6 +37,7 @@ init()
 def tick(time_left):
     percentage = time_left / duration
     current_LED_step = round(total_LED_steps * percentage, 0)
+    print "current step: " + str(current_LED_step) + " / " + str(total_LED_steps)
     pixels = [pixel(i, current_LED_step) for i in range(64)]
     s.set_pixels(pixels)
 
