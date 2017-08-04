@@ -17,6 +17,7 @@ duration = 10*1000
 def millis():
     # return int((datetime.datetime.utcnow() -
     # datetime.datetime(1970, 1, 1)).total_seconds() * 1000)
+    print int(round(time.time() * 1000))
     return int(round(time.time() * 1000))
 
 
