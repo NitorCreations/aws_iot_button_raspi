@@ -12,7 +12,7 @@ RUN apt-get install -yq \
     sense-hat && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN find . -name '*arm-linux-gnueabihf*' | \
+RUN cd /usr/lib/python2.7/dist-packages && find . -name '*arm-linux-gnueabihf*' | \
     xargs -n 1 -I % bash -c 'echo cp % $(echo % | sed "s/arm-linux-gnueabihf\.//g" )' | \
     xargs -L 1 -I % bash -c '%'
 
