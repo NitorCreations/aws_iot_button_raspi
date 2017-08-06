@@ -1,9 +1,10 @@
-from sense_hat import SenseHat
+# from sense_emu import SenseHat, ACTION_PRESSED
+from sense_hat import SenseHat, ACTION_PRESSED
 import time
 # from datetime import datetime
 
-s = SenseHat()
-s.low_light = True
+sense_hat = SenseHat()
+# s.low_light = True
 
 green = (0, 255, 0)
 red = (255, 0, 0)
@@ -12,6 +13,8 @@ steps_per_LED = 256
 total_LED_steps = LEDs * steps_per_LED
 COLOR_MAX = 255
 duration = 60 * 1000
+
+push_callback = None
 
 
 def millis():
@@ -24,19 +27,24 @@ start_time = millis()
 countdown_zero = start_time
 
 
-def init():
-    global countdown_zero
-    countdown_zero = millis() + duration
+def init(pushedAt, _duration):
+    global countdown_zero, duration
+    duration = _duration if _duration else duration
+    countdown_zero = pushedAt + duration
 
 
-init()
-
-
-def tick(time_left):
+def tick():
+    for event in sense_hat.stick.get_events():
+        if event.action == ACTION_PRESSED:
+            pushedAt = millis()
+            init(pushedAt, duration)
+            if push_callback:
+                push_callback(pushedAt, duration)
+    time_left = max(countdown_zero - millis(), 0)
     percentage = time_left / duration
     current_LED_step = round(total_LED_steps * percentage, 0)
-    pixels = [pixel(i, current_LED_step) for i in range(64)]
-    s.set_pixels(pixels)
+    sense_hat.set_pixels([pixel(i, current_LED_step) for i in range(LEDs)])
+    return 0.01 if time_left else 0.5
 
 
 def pixel(i, current_step):
@@ -56,15 +64,3 @@ def pixel(i, current_step):
         return green
     else:
         return red
-
-
-while True:
-    if s.stick.get_events():
-        init()
-    time_left = max(countdown_zero - millis(), 0)
-    if not time_left:
-        tick(time_left)
-        time.sleep(1)
-    else:
-        tick(time_left)
-        time.sleep(.01)
