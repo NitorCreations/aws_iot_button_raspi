@@ -1,5 +1,5 @@
-from sense_emu import SenseHat, ACTION_PRESSED
-# from sense_hat import SenseHat, ACTION_PRESSED
+# from sense_emu import SenseHat, ACTION_PRESSED
+from sense_hat import SenseHat, ACTION_PRESSED
 import time
 # from datetime import datetime
 
