@@ -1,5 +1,5 @@
 #!/bin/bash
-
+# lol
 echo $DEVICE_AND_CA_CERT > deviceCertAndCACert.pem
 export CERTIFICATE_PATH=deviceCertAndCACert.pem
 echo $PRIVATE_KEY > deviceCert.key
